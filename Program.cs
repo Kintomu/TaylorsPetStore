@@ -25,7 +25,9 @@ while (userInput.ToLower() != "exit")
         {
             var dogLeash = new DogLeash();
             dogLeash.AddProduct(dogLeash);
+            dogLeash.AddDogLeash(dogLeash);
             dogLeash.ProductDetails(dogLeash);
+            dogLeash.DogLeashDetails(dogLeash);
         }
         Console.WriteLine("Press 1 to add a product");
         Console.WriteLine("Type 'exit' to quit");
