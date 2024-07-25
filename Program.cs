@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Text.Json;
 using TaylorsPetStore;
 
 Console.WriteLine("Welcome to Taylor's Pet Store");
@@ -18,6 +19,7 @@ while (userInput.ToLower() != "exit")
             var catFood = new CatFood();
             catFood.AddProduct(catFood);
             catFood.AddCatfood(catFood);
+            Console.WriteLine(JsonSerializer.Serialize(catFood));
             catFood.ProductDetails(catFood);
             catFood.CatFoodDetails(catFood);
         }
@@ -26,6 +28,7 @@ while (userInput.ToLower() != "exit")
             var dogLeash = new DogLeash();
             dogLeash.AddProduct(dogLeash);
             dogLeash.AddDogLeash(dogLeash);
+            Console.WriteLine(JsonSerializer.Serialize(dogLeash));
             dogLeash.ProductDetails(dogLeash);
             dogLeash.DogLeashDetails(dogLeash);
         }
