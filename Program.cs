@@ -7,6 +7,7 @@ Console.WriteLine("Press 1 to add a product");
 Console.WriteLine("Type 'exit' to quit");
 
 string userInput = Console.ReadLine();
+var productLogic = new ProductLogic();
 
 while (userInput.ToLower() != "exit")
 {
@@ -19,7 +20,8 @@ while (userInput.ToLower() != "exit")
             var catFood = new CatFood();
             catFood.AddProduct(catFood);
             catFood.AddCatfood(catFood);
-            Console.WriteLine(JsonSerializer.Serialize(catFood));
+            productLogic.AddProduct(catFood);
+            Console.WriteLine(catFood.Name + " Added Successfully!");
             catFood.ProductDetails(catFood);
             catFood.CatFoodDetails(catFood);
         }
@@ -28,7 +30,8 @@ while (userInput.ToLower() != "exit")
             var dogLeash = new DogLeash();
             dogLeash.AddProduct(dogLeash);
             dogLeash.AddDogLeash(dogLeash);
-            Console.WriteLine(JsonSerializer.Serialize(dogLeash));
+            productLogic.AddProduct(dogLeash);
+            Console.WriteLine(dogLeash.Name + " Added Successfully!");
             dogLeash.ProductDetails(dogLeash);
             dogLeash.DogLeashDetails(dogLeash);
         }
