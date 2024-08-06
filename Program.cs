@@ -4,6 +4,7 @@ using TaylorsPetStore;
 
 Console.WriteLine("Welcome to Taylor's Pet Store");
 Console.WriteLine("Press 1 to add a product");
+Console.WriteLine("Press 2 to check product list");
 Console.WriteLine("Type 'exit' to quit");
 
 string userInput = Console.ReadLine();
@@ -15,6 +16,7 @@ while (userInput.ToLower() != "exit")
     {
         Console.WriteLine("Press 1 to add a Cat Food, Press 2 to add a Dog Leash");
         userInput = Console.ReadLine();
+
         if (userInput == "1")
         {
             var catFood = new CatFood();
@@ -35,11 +37,25 @@ while (userInput.ToLower() != "exit")
             dogLeash.ProductDetails(dogLeash);
             dogLeash.DogLeashDetails(dogLeash);
         }
-        Console.WriteLine("Press 1 to add a product");
-        Console.WriteLine("Type 'exit' to quit");
-
-        userInput = Console.ReadLine();
     }
-}
+    else if (userInput == "2")
+    {
+        Console.WriteLine("Enter the name of the product you would like to look up");
+        userInput = Console.ReadLine();
+
+        
+        var result = productLogic.GetDogLeashByName(userInput);
+        result.ProductDetails(result);
+        result.DogLeashDetails(result);
+
+        //TODO: Add Logic for Cat food and null checks 
+    }
+    Console.WriteLine("Press 1 to add a product");
+    Console.WriteLine("Press 2 to check product list");
+    Console.WriteLine("Type 'exit' to quit");
+
+    userInput = Console.ReadLine();
+    }
+
 
 
