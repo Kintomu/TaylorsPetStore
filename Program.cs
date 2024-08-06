@@ -44,11 +44,26 @@ while (userInput.ToLower() != "exit")
         userInput = Console.ReadLine();
 
         
-        var result = productLogic.GetDogLeashByName(userInput);
-        result.ProductDetails(result);
-        result.DogLeashDetails(result);
+        var DLresult = productLogic.GetDogLeashByName(userInput);
+        if (DLresult != null)
+        {
+            DLresult.ProductDetails(DLresult);
+            DLresult.DogLeashDetails(DLresult);
+        }
+        else 
+        {
+            var CFresult = productLogic.GetCatFoodByName(userInput);
+            if (CFresult != null)
+            {
+                CFresult.ProductDetails(CFresult);
+                CFresult.CatFoodDetails(CFresult);
+            }
+            else
+            {
+                Console.WriteLine("No Product Found");
+            }
+        }
 
-        //TODO: Add Logic for Cat food and null checks 
     }
     Console.WriteLine("Press 1 to add a product");
     Console.WriteLine("Press 2 to check product list");

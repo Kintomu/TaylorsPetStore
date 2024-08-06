@@ -33,11 +33,23 @@ namespace TaylorsPetStore
 
         public DogLeash GetDogLeashByName(string name)
         {
-            if (_dogLeashCollection.ContainsKey(name))
+            try
             {
                 return _dogLeashCollection[name];
             }
-            else
+            catch(Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public CatFood GetCatFoodByName(string name)
+        {
+            try
+            {
+                return _catFoodCollection[name];
+            }
+            catch (Exception ex)
             {
                 return null;
             }
