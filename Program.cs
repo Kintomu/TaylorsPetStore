@@ -40,28 +40,46 @@ while (userInput.ToLower() != "exit")
     }
     else if (userInput == "2")
     {
-        Console.WriteLine("Enter the name of the product you would like to look up");
-        userInput = Console.ReadLine();
+        Console.WriteLine("Would you like a list of in stock products? y/n?");
+        userInput = Console.ReadLine().ToLower();
 
-        
-        var DLresult = productLogic.GetDogLeashByName(userInput);
-        if (DLresult != null)
+        if (userInput == "y")
         {
-            DLresult.ProductDetails(DLresult);
-            DLresult.DogLeashDetails(DLresult);
-        }
-        else 
-        {
-            var CFresult = productLogic.GetCatFoodByName(userInput);
-            if (CFresult != null)
+            foreach (var product in productLogic.GetOnlyInStockProducts())
             {
-                CFresult.ProductDetails(CFresult);
-                CFresult.CatFoodDetails(CFresult);
+                Console.WriteLine(product);
+            }
+        }
+        else if (userInput == "n")
+        {
+
+            Console.WriteLine("Enter the name of the product you would like to look up");
+            userInput = Console.ReadLine();
+
+
+            var DLresult = productLogic.GetDogLeashByName(userInput);
+            if (DLresult != null)
+            {
+                DLresult.ProductDetails(DLresult);
+                DLresult.DogLeashDetails(DLresult);
             }
             else
             {
-                Console.WriteLine("No Product Found");
+                var CFresult = productLogic.GetCatFoodByName(userInput);
+                if (CFresult != null)
+                {
+                    CFresult.ProductDetails(CFresult);
+                    CFresult.CatFoodDetails(CFresult);
+                }
+                else
+                {
+                    Console.WriteLine("No Product Found");
+                }
             }
+        }
+        else
+        {
+            Console.WriteLine("Invalid Input");
         }
 
     }
