@@ -40,15 +40,16 @@ while (userInput.ToLower() != "exit")
     }
     else if (userInput == "2")
     {
-        Console.WriteLine("Would you like a list of in stock products? y/n?");
+        Console.WriteLine("Would you like a list of in stock products and their total value? y/n?");
         userInput = Console.ReadLine().ToLower();
 
         if (userInput == "y")
         {
-            foreach (var product in productLogic.GetOnlyInStockProducts())
+            foreach (var product in productLogic.GetAllProducts().InStock())
             {
-                Console.WriteLine(product);
+                Console.WriteLine(product.Name);
             }
+            Console.WriteLine("Total Price of Inventory: $" + productLogic.GetTotalPriceOfInventory().ToString());
         }
         else if (userInput == "n")
         {

@@ -16,6 +16,7 @@ namespace TaylorsPetStore
 
         public List<Product> GetAllProducts();
 
-        public List<string> GetOnlyInStockProducts();
+        public decimal GetTotalPriceOfInventory();
+
     }
 }
