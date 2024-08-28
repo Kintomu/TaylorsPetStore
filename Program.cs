@@ -2,94 +2,110 @@
 using System.Text.Json;
 using TaylorsPetStore;
 
-Console.WriteLine("Welcome to Taylor's Pet Store");
-Console.WriteLine("Press 1 to add a product");
-Console.WriteLine("Press 2 to check product list");
-Console.WriteLine("Type 'exit' to quit");
-
-string userInput = Console.ReadLine();
-var productLogic = new ProductLogic();
-
-while (userInput.ToLower() != "exit")
+internal class Program
 {
-    if (userInput == "1")
+    private static void Main(string[] args)
     {
-        Console.WriteLine("Press 1 to add a Cat Food, Press 2 to add a Dog Leash");
-        userInput = Console.ReadLine();
+        Console.WriteLine("Welcome to Taylor's Pet Store");
+        Console.WriteLine("Press 1 to add a product");
+        Console.WriteLine("Press 2 to check product list");
+        Console.WriteLine("Type 'exit' to quit");
 
-        if (userInput == "1")
-        {
-            var catFood = new CatFood();
-            catFood.AddProduct(catFood);
-            catFood.AddCatfood(catFood);
-            productLogic.AddProduct(catFood);
-            Console.WriteLine(catFood.Name + " Added Successfully!");
-            catFood.ProductDetails(catFood);
-            catFood.CatFoodDetails(catFood);
-        }
-        else if (userInput == "2")
-        {
-            var dogLeash = new DogLeash();
-            dogLeash.AddProduct(dogLeash);
-            dogLeash.AddDogLeash(dogLeash);
-            productLogic.AddProduct(dogLeash);
-            Console.WriteLine(dogLeash.Name + " Added Successfully!");
-            dogLeash.ProductDetails(dogLeash);
-            dogLeash.DogLeashDetails(dogLeash);
-        }
-    }
-    else if (userInput == "2")
-    {
-        Console.WriteLine("Would you like a list of in stock products and their total value? y/n?");
-        userInput = Console.ReadLine().ToLower();
+        string userInput = Console.ReadLine();
+        var productLogic = new ProductLogic();
 
-        if (userInput == "y")
+        while (userInput.ToLower() != "exit")
         {
-            foreach (var product in productLogic.GetAllProducts().InStock())
+            if (userInput == "1")
             {
-                Console.WriteLine(product.Name);
-            }
-            Console.WriteLine("Total Price of Inventory: $" + productLogic.GetTotalPriceOfInventory().ToString());
-        }
-        else if (userInput == "n")
-        {
+                Console.WriteLine("Press 1 to add a Cat Food, Press 2 to add a Dog Leash");
+                userInput = Console.ReadLine();
 
-            Console.WriteLine("Enter the name of the product you would like to look up");
-            userInput = Console.ReadLine();
-
-
-            var DLresult = productLogic.GetDogLeashByName(userInput);
-            if (DLresult != null)
-            {
-                DLresult.ProductDetails(DLresult);
-                DLresult.DogLeashDetails(DLresult);
-            }
-            else
-            {
-                var CFresult = productLogic.GetCatFoodByName(userInput);
-                if (CFresult != null)
+                if (userInput == "1")
                 {
-                    CFresult.ProductDetails(CFresult);
-                    CFresult.CatFoodDetails(CFresult);
+                    AddCatFood(productLogic);
+                }
+                else if (userInput == "2")
+                {
+                    AddDogLeash(productLogic);
+                }
+            }
+            else if (userInput == "2")
+            {
+                Console.WriteLine("Would you like a list of in stock products and their total value? y/n?");
+                userInput = Console.ReadLine().ToLower();
+
+                if (userInput == "y")
+                {
+                    foreach (var product in productLogic.GetAllProducts().InStock())
+                    {
+                        Console.WriteLine(product.Name);
+                    }
+                    Console.WriteLine("Total Price of Inventory: $" + productLogic.GetTotalPriceOfInventory().ToString());
+                }
+                else if (userInput == "n")
+                {
+
+                    Console.WriteLine("Enter the name of the product you would like to look up");
+                    userInput = Console.ReadLine();
+
+                    LookupProduct(productLogic, userInput);
                 }
                 else
                 {
-                    Console.WriteLine("No Product Found");
+                    Console.WriteLine("Invalid Input");
                 }
+
+            }
+            Console.WriteLine("Press 1 to add a product");
+            Console.WriteLine("Press 2 to check product list");
+            Console.WriteLine("Type 'exit' to quit");
+
+            userInput = Console.ReadLine();
+        }
+    }
+    private static void AddCatFood(ProductLogic productLogic)
+    {
+        var catFood = new CatFood();
+        catFood.AddProduct(catFood);
+        catFood.AddCatfood(catFood);
+        productLogic.AddProduct(catFood);
+        Console.WriteLine(catFood.Name + " Added Successfully!");
+        catFood.ProductDetails(catFood);
+        catFood.CatFoodDetails(catFood);
+    }
+
+    private static void AddDogLeash(ProductLogic productLogic)
+    {
+        var dogLeash = new DogLeash();
+        dogLeash.AddProduct(dogLeash);
+        dogLeash.AddDogLeash(dogLeash);
+        productLogic.AddProduct(dogLeash);
+        Console.WriteLine(dogLeash.Name + " Added Successfully!");
+        dogLeash.ProductDetails(dogLeash);
+        dogLeash.DogLeashDetails(dogLeash);
+    }
+
+    private static void LookupProduct(ProductLogic productLogic, string userInput)
+    {
+        var product = productLogic.GetProductByName(userInput);
+
+        if (product != null)
+        {
+            product.ProductDetails(product);
+
+            if (product is DogLeash dogLeash)
+            {
+                dogLeash.DogLeashDetails(dogLeash);
+            }
+            else if (product is CatFood catFood)
+            {
+                catFood.CatFoodDetails(catFood);
             }
         }
         else
         {
-            Console.WriteLine("Invalid Input");
+            Console.WriteLine("No Product Found");
         }
-
     }
-    Console.WriteLine("Press 1 to add a product");
-    Console.WriteLine("Press 2 to check product list");
-    Console.WriteLine("Type 'exit' to quit");
-
-    userInput = Console.ReadLine();
-    }
-
-
-
+}

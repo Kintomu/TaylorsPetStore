@@ -45,6 +45,7 @@ namespace TaylorsPetStore
             }
             catch (Exception ex)
             {
+                Console.WriteLine("An unexpected error occurred." + ex.Message);
                 return null;
             }
         }
@@ -57,6 +58,7 @@ namespace TaylorsPetStore
             }
             catch (Exception ex)
             {
+                Console.WriteLine("An unexpected error occurred." + ex.Message);
                 return null;
             }
         }
@@ -70,6 +72,17 @@ namespace TaylorsPetStore
                 totalPrice += product.Price;
             }
             return totalPrice;
+        }
+
+        public Product GetProductByName(string name)
+        {
+            var dogLeash = GetDogLeashByName(name);
+            if (dogLeash != null) return dogLeash;
+
+            var catFood = GetCatFoodByName(name);
+            if (catFood != null) return catFood;
+
+            return null;
         }
 
         public List<Product> GetAllProducts()
