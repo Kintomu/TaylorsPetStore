@@ -1,18 +1,22 @@
-﻿using System.Runtime.CompilerServices;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using TaylorsPetStore;
+
 
 internal class Program
 {
     private static void Main(string[] args)
     {
+        IServiceProvider serviceProvider = CreateServiceCollection();
+
         Console.WriteLine("Welcome to Taylor's Pet Store");
         Console.WriteLine("Press 1 to add a product");
         Console.WriteLine("Press 2 to check product list");
         Console.WriteLine("Type 'exit' to quit");
 
         string userInput = Console.ReadLine();
-        var productLogic = new ProductLogic();
+        var productLogic = serviceProvider.GetService<IProductLogic>();
 
         while (userInput.ToLower() != "exit")
         {
@@ -64,7 +68,7 @@ internal class Program
             userInput = Console.ReadLine();
         }
     }
-    private static void AddCatFood(ProductLogic productLogic)
+    private static void AddCatFood(IProductLogic productLogic)
     {
         var catFood = new CatFood();
         catFood.AddProduct(catFood);
@@ -75,7 +79,7 @@ internal class Program
         catFood.CatFoodDetails(catFood);
     }
 
-    private static void AddDogLeash(ProductLogic productLogic)
+    private static void AddDogLeash(IProductLogic productLogic)
     {
         var dogLeash = new DogLeash();
         dogLeash.AddProduct(dogLeash);
@@ -86,7 +90,7 @@ internal class Program
         dogLeash.DogLeashDetails(dogLeash);
     }
 
-    private static void LookupProduct(ProductLogic productLogic, string userInput)
+    private static void LookupProduct(IProductLogic productLogic, string userInput)
     {
         var product = productLogic.GetProductByName(userInput);
 
@@ -107,5 +111,12 @@ internal class Program
         {
             Console.WriteLine("No Product Found");
         }
+    }
+
+    private static IServiceProvider CreateServiceCollection()
+    {
+       return new ServiceCollection()
+        .AddTransient<IProductLogic, ProductLogic>()
+        .BuildServiceProvider();
     }
 }
