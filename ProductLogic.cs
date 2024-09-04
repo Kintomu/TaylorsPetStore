@@ -37,32 +37,6 @@ namespace TaylorsPetStore
             _products.Add(product);
         }
 
-        public DogLeash GetDogLeashByName(string name)
-        {
-            try
-            {
-                return _dogLeashCollection[name];
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("An unexpected error occurred." + ex.Message);
-                return null;
-            }
-        }
-
-        public CatFood GetCatFoodByName(string name)
-        {
-            try
-            {
-                return _catFoodCollection[name];
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("An unexpected error occurred." + ex.Message);
-                return null;
-            }
-        }
-
         public decimal GetTotalPriceOfInventory()
         {
             var stockedProducts = _products.InStock();
@@ -74,15 +48,46 @@ namespace TaylorsPetStore
             return totalPrice;
         }
 
-        public Product GetProductByName(string name)
+        public T GetProductByName<T>(string name) where T : Product
         {
-            var dogLeash = GetDogLeashByName(name);
-            if (dogLeash != null) return dogLeash;
-
-            var catFood = GetCatFoodByName(name);
-            if (catFood != null) return catFood;
-
-            return null;
+            Product result = new Product();
+            bool looking = true;
+            if (looking)
+            {
+                try
+                {
+                    result = _catFoodCollection[name];
+                    looking = false;
+                }
+                catch { }      
+            }
+            if (looking)
+            {
+                try
+                {
+                    result = _dogLeashCollection[name];
+                    looking = false;
+                }
+                catch { }
+            }
+            if (looking)
+            {
+                try
+                {
+                    result = _products.FirstOrDefault(product => product.Name == name);
+                    looking = false;
+                }
+                catch { }
+            }
+            if (result != null)
+            {
+                return (T)result;
+            }
+            else
+            {
+                Console.WriteLine("No Products Found.");
+                return null;
+            }
         }
 
         public List<Product> GetAllProducts()

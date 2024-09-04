@@ -10,15 +10,11 @@ namespace TaylorsPetStore
     {
         public void AddProduct(Product product);
 
-        public DogLeash GetDogLeashByName(string name);
-
-        public CatFood GetCatFoodByName(string name);
-
         public List<Product> GetAllProducts();
 
         public decimal GetTotalPriceOfInventory();
 
-        public Product GetProductByName(string name);
+        public T GetProductByName<T>(string name) where T : Product;
 
     }
 }

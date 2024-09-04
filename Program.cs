@@ -26,39 +26,55 @@ internal class Program
         {
             if (userInput == "1")
             {
-                /*                Console.WriteLine("Press 1 to add a Cat Food, Press 2 to add a Dog Leash");
-                                userInput = Console.ReadLine();
-
-                                if (userInput == "1")
-                                {
-                                    AddCatFood(productLogic);
-                                }
-                                else if (userInput == "2")
-                                {
-                                    AddDogLeash(productLogic);
-                                }*/
-
-                Console.WriteLine("Enter the JSON for the product you would like added.");
+                Console.WriteLine("Press 1 to add JSON, Press 2 to add manually.");
                 userInput = Console.ReadLine();
 
-
-                Product deserializedData = JsonSerializer.Deserialize<Product>(userInput);
-                bool Valid = Validate(deserializedData);
-
-                if (Valid)
+                if (userInput == "1")
                 {
+                    Console.WriteLine("Enter the JSON for the product you would like added.");
+                    userInput = Console.ReadLine();
+
+                    bool Valid = true;
                     try
                     {
-                        productLogic.AddProduct(deserializedData);
-                        Console.WriteLine(deserializedData.Name + " added Successfully!");
+                        Product deserializedData = JsonSerializer.Deserialize<Product>(userInput);
+                        Valid = Validate(deserializedData);
+
+                        if (Valid)
+                        {
+                            try
+                            {
+                                productLogic.AddProduct(deserializedData);
+                                Console.WriteLine(deserializedData.Name + " added Successfully!");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"Error Importing JSON: {ex.Message}");
+                            }
+
+                        }
                     }
-                    catch (Exception ex)
+                    catch
                     {
-                        Console.WriteLine($"Error Importing JSON: {ex.Message}");
+                        Console.WriteLine("Invalid JSON input");
+                        Valid = false;
+                    }
+                }
+                else if (userInput == "2")
+                {
+                    Console.WriteLine("Press 1 to add a Cat Food, Press 2 to add a Dog Leash");
+                    userInput = Console.ReadLine();
+
+                    if (userInput == "1")
+                    {
+                        AddCatFood(productLogic);
+                    }
+                    else if (userInput == "2")
+                    {
+                        AddDogLeash(productLogic);
                     }
 
                 }
-
             }
             else if (userInput == "2")
             {
@@ -118,7 +134,7 @@ internal class Program
 
     private static void LookupProduct(IProductLogic productLogic, string userInput)
     {
-        var product = productLogic.GetProductByName(userInput);
+        var product = productLogic.GetProductByName<Product>(userInput);
 
         if (product != null)
         {
