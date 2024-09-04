@@ -1,7 +1,11 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation.Results;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
+using System.Xml.Linq;
 using TaylorsPetStore;
+using TaylorsPetStore.Validators;
 
 
 internal class Program
@@ -22,17 +26,39 @@ internal class Program
         {
             if (userInput == "1")
             {
-                Console.WriteLine("Press 1 to add a Cat Food, Press 2 to add a Dog Leash");
+                /*                Console.WriteLine("Press 1 to add a Cat Food, Press 2 to add a Dog Leash");
+                                userInput = Console.ReadLine();
+
+                                if (userInput == "1")
+                                {
+                                    AddCatFood(productLogic);
+                                }
+                                else if (userInput == "2")
+                                {
+                                    AddDogLeash(productLogic);
+                                }*/
+
+                Console.WriteLine("Enter the JSON for the product you would like added.");
                 userInput = Console.ReadLine();
 
-                if (userInput == "1")
+
+                Product deserializedData = JsonSerializer.Deserialize<Product>(userInput);
+                bool Valid = Validate(deserializedData);
+
+                if (Valid)
                 {
-                    AddCatFood(productLogic);
+                    try
+                    {
+                        productLogic.AddProduct(deserializedData);
+                        Console.WriteLine(deserializedData.Name + " added Successfully!");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error Importing JSON: {ex.Message}");
+                    }
+
                 }
-                else if (userInput == "2")
-                {
-                    AddDogLeash(productLogic);
-                }
+
             }
             else if (userInput == "2")
             {
@@ -115,8 +141,26 @@ internal class Program
 
     private static IServiceProvider CreateServiceCollection()
     {
-       return new ServiceCollection()
+        return new ServiceCollection()
         .AddTransient<IProductLogic, ProductLogic>()
         .BuildServiceProvider();
+    }
+
+    private static bool Validate(Product product)
+    {
+        ProductValidator validator = new ProductValidator();
+
+        ValidationResult results = validator.Validate(product);
+
+        if (!results.IsValid)
+        {
+            foreach (var failure in results.Errors)
+            {
+                Console.WriteLine("Property " + failure.PropertyName + " failed validation. Error was: " + failure.ErrorMessage);
+            }
+            return false;
+        }
+        return true;
+
     }
 }
