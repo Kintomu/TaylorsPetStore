@@ -159,6 +159,7 @@ internal class Program
     {
         return new ServiceCollection()
         .AddTransient<IProductLogic, ProductLogic>()
+        .AddTransient<IProductRepository, ProjectRepository>()
         .BuildServiceProvider();
     }
 

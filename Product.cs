@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace TaylorsPetStore
 {
-    internal class Product
+    public class Product
     {
+        public string ProductID { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public decimal Price { get; set; }
         public int Quantity { get; set; }
