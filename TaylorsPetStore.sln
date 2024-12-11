@@ -4,11 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaylorsPetStore", "TaylorsPetStore.csproj", "{935AFE5E-8351-4BD2-AD59-BD9DE69F3865}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetStore.Data", "..\PetStore.Data\PetStore.Data.csproj", "{F5A84EE6-2600-4FE8-A705-A5DCF520065B}"
 	ProjectSection(ProjectDependencies) = postProject
-		{935AFE5E-8351-4BD2-AD59-BD9DE69F3865} = {935AFE5E-8351-4BD2-AD59-BD9DE69F3865}
+		{F5A84EE6-2600-4FE8-A705-A5DCF520065B} = {F5A84EE6-2600-4FE8-A705-A5DCF520065B}
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetStore.Data", "..\PetStore.Data\PetStore.Data.csproj", "{F5A84EE6-2600-4FE8-A705-A5DCF520065B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

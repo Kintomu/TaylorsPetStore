@@ -6,6 +6,8 @@ using System.Text.Json;
 using System.Xml.Linq;
 using TaylorsPetStore;
 using TaylorsPetStore.Validators;
+using PetStore.Data;
+
 
 
 internal class Program
@@ -159,7 +161,7 @@ internal class Program
     {
         return new ServiceCollection()
         .AddTransient<IProductLogic, ProductLogic>()
-        .AddTransient<IProductRepository, ProjectRepository>()
+        .AddTransient<IProductRepository, ProductRepository>()
         .BuildServiceProvider();
     }
 

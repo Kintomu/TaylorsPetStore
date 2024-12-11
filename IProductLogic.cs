@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TaylorsPetStore
+﻿namespace TaylorsPetStore
 {
     internal interface IProductLogic
     {
@@ -15,6 +9,8 @@ namespace TaylorsPetStore
         public decimal GetTotalPriceOfInventory();
 
         public T GetProductByName<T>(string name) where T : Product;
+        
+        public List<String> GetOnlyInStockProducts();
 
     }
 }
