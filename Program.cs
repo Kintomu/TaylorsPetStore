@@ -1,14 +1,14 @@
-﻿using FluentValidation.Results;
+﻿using System.Text.Json;
+using FluentValidation.Results;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using System.Runtime.CompilerServices;
-using System.Text.Json;
-using System.Xml.Linq;
-using TaylorsPetStore;
-using TaylorsPetStore.Validators;
 using PetStore.Data;
+using PetStore.Data.Models;
+using TaylorsPetStore.Extensions;
+using TaylorsPetStore.Logic;
+using TaylorsPetStore.Models;
+using TaylorsPetStore.Validators;
 
-
+namespace TaylorsPetStore;
 
 internal class Program
 {
@@ -160,9 +160,9 @@ internal class Program
     private static IServiceProvider CreateServiceCollection()
     {
         return new ServiceCollection()
-        .AddTransient<IProductLogic, ProductLogic>()
-        .AddTransient<IProductRepository, ProductRepository>()
-        .BuildServiceProvider();
+            .AddTransient<IProductLogic, ProductLogic>()
+            .AddTransient<IProductRepository, ProductRepository>()
+            .BuildServiceProvider();
     }
 
     private static bool Validate(Product product)

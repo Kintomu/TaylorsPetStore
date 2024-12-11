@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static TaylorsPetStore.ListExtensions;
+﻿using PetStore.Data.Models;
+using TaylorsPetStore.Extensions;
+using TaylorsPetStore.Models;
 
-namespace TaylorsPetStore
+namespace TaylorsPetStore.Logic
 {
     internal class ProductLogic : IProductLogic
     {
         private List<Product> _products;
-        private Dictionary<string, DogLeash> _dogLeashCollection = new Dictionary<string, DogLeash>();
-        private Dictionary<string, CatFood> _catFoodCollection = new Dictionary<string, CatFood>();
+        private readonly Dictionary<string, DogLeash> _dogLeashCollection = new Dictionary<string, DogLeash>();
+        private readonly Dictionary<string, CatFood> _catFoodCollection = new Dictionary<string, CatFood>();
 
         public ProductLogic()
         {
@@ -27,11 +24,11 @@ namespace TaylorsPetStore
         {
             if (product is CatFood)
             {
-                _catFoodCollection.Add(product.Name, product as CatFood);
+                _catFoodCollection.Add(product.Name, (product as CatFood)!);
             }
             if (product is DogLeash)
             {
-                _dogLeashCollection.Add(product.Name, product as DogLeash);
+                _dogLeashCollection.Add(product.Name, (product as DogLeash)!);
             }
 
             _products.Add(product);
@@ -59,7 +56,10 @@ namespace TaylorsPetStore
                     result = _catFoodCollection[name];
                     looking = false;
                 }
-                catch { }      
+                catch
+                {
+                    // ignored
+                }
             }
             if (looking)
             {
@@ -68,16 +68,22 @@ namespace TaylorsPetStore
                     result = _dogLeashCollection[name];
                     looking = false;
                 }
-                catch { }
+                catch
+                {
+                    // ignored
+                }
             }
             if (looking)
             {
                 try
                 {
-                    result = _products.FirstOrDefault(product => product.Name == name);
+                    result = _products.FirstOrDefault(product => product.Name == name)!;
                     looking = false;
                 }
-                catch { }
+                catch
+                {
+                    // ignored
+                }
             }
             if (result != null)
             {

@@ -1,4 +1,6 @@
-﻿namespace TaylorsPetStore
+﻿using PetStore.Data.Models;
+
+namespace TaylorsPetStore
 {
     internal interface IProductLogic
     {
